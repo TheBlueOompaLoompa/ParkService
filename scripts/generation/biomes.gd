@@ -10,7 +10,7 @@ static var Biomes = {
 static func gen_biomes(size: int):
     WaveFunction.gen_texture(size, biome_rule)
 
-static func biome_rule(px: int, py: int, image: Image, entropy: float, size: int):
+static func biome_rule(px: int, py: int, image: Image, size: int):
     var possible := Biomes.keys()
 
     # Only allow possible biome neighbors
@@ -33,15 +33,16 @@ static func biome_rule(px: int, py: int, image: Image, entropy: float, size: int
 
     var total = 0
 
-    for biome in Biomes.keys():
+    for biome in possible:
         for x in Biomes[biome]["probability"]:
-            total += x
             if total == pick:
                 print(biome)
                 return Biomes.keys().find(biome)
 
-    # TODO: Return real value
-    return 0
+            total += 1
+
+    # Return nothing if it somehow failed
+    return -1
 
 static func reduce_neighbors(possible, biome_name: String):
     return GD_.intersection(possible, Biomes[biome_name]["neighbors"])
