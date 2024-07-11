@@ -11,7 +11,6 @@ Here is the currrent todolist which I will add to as I get further through the p
             - [ ]  Bodies of Water
     - [ ]  Ground texture
     - [ ]  Foliage/grass
-    - [ ]  
 - [ ]  Build trails and create map
 - [ ]  Upgrade to national
 - [ ]  Roads
@@ -20,4 +19,3 @@ Here is the currrent todolist which I will add to as I get further through the p
     - [ ]  Foot traffic and money at National level
 - [ ]  AI generated ratings for funsies
 - [ ]  Take photos
-- [ ]
