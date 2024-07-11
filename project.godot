@@ -11,5 +11,14 @@ config_version=5
 [application]
 
 config/name="Park Service"
+run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.3")
 config/icon="res://icon.png"
+
+[autoload]
+
+GDInternal_ResourceGroup="*res://addons/gd_/./GDInternal_ResourceGroup.tscn"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gd_/plugin.cfg")
