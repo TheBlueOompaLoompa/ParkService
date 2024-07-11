@@ -1,8 +1,32 @@
-[gd_scene load_steps=2 format=3 uid="uid://bm5vjsuuq5jq5"]
+[gd_scene load_steps=6 format=3 uid="uid://bm5vjsuuq5jq5"]
 
 [ext_resource type="Script" path="res://scripts/generation/terrain.gd" id="1_u4e3t"]
+[ext_resource type="Script" path="res://scripts/generation/biomegen.gd" id="2_dig2d"]
+[ext_resource type="Script" path="res://scripts/generation/biome.gd" id="3_m3ql5"]
+
+[sub_resource type="Resource" id="Resource_s83lq"]
+script = ExtResource("3_m3ql5")
+name = "tallgrass"
+probability = 10
+neighbors = Array[String](["grass"])
+min_height = 15
+max_height = 20
+height_variation = 1.0
+
+[sub_resource type="Resource" id="Resource_4elw2"]
+script = ExtResource("3_m3ql5")
+name = "grass"
+probability = 8
+neighbors = Array[String](["tallgrass"])
+min_height = 15
+max_height = 20
+height_variation = 1.0
 
 [node name="Game" type="Node3D"]
 
 [node name="Terrain" type="Node3D" parent="."]
 script = ExtResource("1_u4e3t")
+
+[node name="BiomeGen" type="Node" parent="Terrain"]
+script = ExtResource("2_dig2d")
+biomes = Array[ExtResource("3_m3ql5")]([SubResource("Resource_s83lq"), SubResource("Resource_4elw2")])
