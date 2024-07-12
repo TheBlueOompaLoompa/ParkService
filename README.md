@@ -19,3 +19,5 @@ Here is the currrent todolist which I will add to as I get further through the p
     - [ ]  Foot traffic and money at National level
 - [ ]  AI generated ratings for funsies
 - [ ]  Take photos
+
+View Progress Scrapbook: https://scrapbook.hackclub.com/BenNack
