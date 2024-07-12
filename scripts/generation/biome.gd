@@ -12,3 +12,5 @@ extends Resource
 @export var max_height: int = 10
 ## This is the amount the height can change from point to point on grid
 @export var height_variation: float = 1.0
+@export_range(0.0, 1.0) var slope_min: float = 0.0
+@export_range(0.0, 1.0) var slope_max: float = 1.0

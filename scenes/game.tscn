@@ -1,50 +1,68 @@
-[gd_scene load_steps=9 format=3 uid="uid://bm5vjsuuq5jq5"]
+[gd_scene load_steps=11 format=3 uid="uid://bm5vjsuuq5jq5"]
 
 [ext_resource type="Script" path="res://scripts/generation/terrain.gd" id="1_u4e3t"]
 [ext_resource type="Script" path="res://scripts/generation/biomegen.gd" id="2_dig2d"]
+[ext_resource type="Script" path="res://scripts/generation/height.gd" id="2_t3hqv"]
 [ext_resource type="Script" path="res://scripts/generation/biome.gd" id="3_m3ql5"]
 [ext_resource type="PackedScene" uid="uid://be3ben3prgdtq" path="res://scenes/prefabs/player.tscn" id="4_nhqqw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gks56"]
+frequency = 0.0001
+fractal_octaves = 3
+fractal_gain = 0.01
 
 [sub_resource type="Resource" id="Resource_s83lq"]
 script = ExtResource("3_m3ql5")
 name = "tallgrass"
-probability = 10
+probability = 20
 neighbors = Array[String](["grass"])
-min_height = 15
-max_height = 20
+min_height = 20
+max_height = 100
 height_variation = 1.0
+slope_min = 0.0
+slope_max = 1.0
 
 [sub_resource type="Resource" id="Resource_4elw2"]
 script = ExtResource("3_m3ql5")
 name = "grass"
 probability = 7
 neighbors = Array[String](["tallgrass", "beach"])
-min_height = 15
-max_height = 20
+min_height = 20
+max_height = 50
 height_variation = 1.0
+slope_min = 0.0
+slope_max = 1.0
 
 [sub_resource type="Resource" id="Resource_x634r"]
 script = ExtResource("3_m3ql5")
 name = "beach"
-probability = 5
+probability = 4
 neighbors = Array[String](["grass", "lake"])
-min_height = 10
-max_height = 15
+min_height = 20
+max_height = 50
 height_variation = 1.0
+slope_min = 0.0
+slope_max = 1.0
 
 [sub_resource type="Resource" id="Resource_30t7y"]
 script = ExtResource("3_m3ql5")
 name = "lake"
-probability = 10
+probability = 20
 neighbors = Array[String](["beach"])
 min_height = 0
-max_height = 10
+max_height = 20
 height_variation = 1.0
+slope_min = 0.0
+slope_max = 1.0
 
 [node name="Game" type="Node3D"]
 
 [node name="Terrain" type="Node3D" parent="."]
 script = ExtResource("1_u4e3t")
+
+[node name="HeightMap" type="Node" parent="Terrain"]
+script = ExtResource("2_t3hqv")
+noise = SubResource("FastNoiseLite_gks56")
 
 [node name="BiomeGen" type="Node" parent="Terrain"]
 script = ExtResource("2_dig2d")
