@@ -3,26 +3,12 @@ class_name BiomeGen
 
 @export var biomes: Array[Biome]
 
-#static var Biomes = {
-#    "tallgrass":    { "probability": 10, "height_range": [15, 20], "height_variation": 1, "neighbors": ["tallgrass", "grass"] },
-#    "grass":        { "probability": 8, "height_range": [15, 20], "height_variation": 1, "neighbors": ["grass", "tallgrass", "beach"] },
-#    "beach":        { "probability": 4, "height_range": [10, 15], "height_variation": 1, "neighbors": ["beach", "grass", "lake"] },
-#    "lake":         { "probability": 8, "height_range": [0, 10], "height_variation": 1, "neighbors": ["beach", "lake"] },
-#}
-
 func gen_biomes(size: int):
-    WaveFunction.gen_texture(size, biome_rule)
-
-# Returns an array [0] = name, [1] = Biome info
-#static func get_biome_by_px(pixel: int):
-#    var key = Biomes.keys().find(pixel)
-#    return [key, Biomes[key]]
-
-func list_biomes():
-    return GD_.map(biomes, func(biome, _k): return String(biome.name))
+    return WaveFunction.gen_texture(size, biome_rule)
 
 func biome_rule(px: int, py: int, image: Image, size: int):
-    var possible = list_biomes()
+    var biome_list = list_biomes()
+    var possible = biome_list
 
 
     # Only allow possible biome neighbors
@@ -32,36 +18,42 @@ func biome_rule(px: int, py: int, image: Image, size: int):
                 continue
             else:
                 var pixel = image.get_pixel(x, y).r
-                for biome in Biomes.keys():
-                    if pixel == fidx(biome):
+                for biome in biome_list:
+                    var biome_idx = fidx(biome)
+                    assert(biome_idx > -1, "Biome doesn't exist.")
+                    if pixel == biome_idx:
                         possible = reduce_neighbors(possible, biome)
 
-    print(possible)
-    return 0
-#    # Collapse with probability pot
-#    var pot = 0
-#    for left in possible:
-#        pot += Biomes[left]["probability"]
-#
-#    var pick = randi() % pot
-#
-#    var total = 0
-#
-#    for biome in possible:
-#        for x in Biomes[biome]["probability"]:
-#            if total == pick:
-#                return Biomes.keys().find(biome)
-#
-#            total += 1
-#
-#    # Return nothing if it somehow failed
-#    return -1
-#
-#func reduce_neighbors(possible, biome_name: String):
-#    return GD_.intersection(possible, Biomes[biome_name]["neighbors"])
+    # Collapse with probability pot
+    var pot = 0
+    for left in possible:
+        pot += find_biome(left).probability
+
+    var pick = randi() % pot
+
+    var total = 0
+
+    for biome in possible:
+        for x in find_biome(biome).probability:
+            if total == pick:
+                return fidx(biome)
+
+            total += 1
+
+    # Return nothing if it somehow failed
+    return -1
+
+func find_biome(biome_name: String):
+    return GD_.find(biomes, ["name", biome_name])
+
+func list_biomes():
+    return GD_.map(biomes, func(biome, _k): return String(biome.name))
+
+func reduce_neighbors(possible, biome_name: String):
+    var neighbors = find_biome(biome_name).neighbors
+    neighbors.append(biome_name)
+    return GD_.intersection(possible, neighbors)
 #
 ## Find biome idx
-#func fidx(name: String):
-#    if Biomes.has(name):
-#        return Biomes.keys().find(name)
-#    return -1
+func fidx(p_name: String):
+    return GD_.find_index(biomes, ["name", p_name])

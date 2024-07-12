@@ -4,7 +4,8 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    biome_gen.gen_biomes(10)
+    biome_gen.gen_biomes(50)
+    print("Generated biomes")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
