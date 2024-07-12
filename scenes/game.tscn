@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bm5vjsuuq5jq5"]
+[gd_scene load_steps=15 format=3 uid="uid://bm5vjsuuq5jq5"]
 
 [ext_resource type="Script" path="res://scripts/generation/terrain.gd" id="1_u4e3t"]
 [ext_resource type="Script" path="res://scripts/generation/biomegen.gd" id="2_dig2d"]
 [ext_resource type="Script" path="res://scripts/generation/height.gd" id="2_t3hqv"]
 [ext_resource type="Script" path="res://scripts/generation/biome.gd" id="3_m3ql5"]
 [ext_resource type="PackedScene" uid="uid://be3ben3prgdtq" path="res://scenes/prefabs/player.tscn" id="4_nhqqw"]
+[ext_resource type="Script" path="res://scripts/generation/terraingen.gd" id="5_8pg4r"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gks56"]
 frequency = 0.0001
@@ -55,6 +56,14 @@ height_variation = 1.0
 slope_min = 0.0
 slope_max = 1.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdmvi"]
+bg_color = Color(0.346151, 0.353846, 0.586911, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7mamy"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_geb2a"]
+size = Vector2(0.5, 0.5)
+
 [node name="Game" type="Node3D"]
 
 [node name="Terrain" type="Node3D" parent="."]
@@ -68,6 +77,39 @@ noise = SubResource("FastNoiseLite_gks56")
 script = ExtResource("2_dig2d")
 biomes = Array[ExtResource("3_m3ql5")]([SubResource("Resource_s83lq"), SubResource("Resource_4elw2"), SubResource("Resource_x634r"), SubResource("Resource_30t7y")])
 
+[node name="TerrainGen" type="StaticBody3D" parent="Terrain"]
+script = ExtResource("5_8pg4r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/TerrainGen"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/TerrainGen"]
+
+[node name="Loading" type="CanvasLayer" parent="Terrain"]
+layer = 2
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="Terrain/Loading"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rdmvi")
+
+[node name="Label" type="Label" parent="Terrain/Loading/PanelContainer"]
+layout_mode = 2
+text = "Generating lololololololololo"
+label_settings = SubResource("LabelSettings_7mamy")
+horizontal_alignment = 1
+
 [node name="Player" parent="." instance=ExtResource("4_nhqqw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.147, 11, 2.54)
+look_speed = 0.6
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.873628, -0.39525, 0.283817, 0, 0.583272, 0.812277, -0.486595, -0.709628, 0.509563, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_geb2a")
 
 [connection signal="terrain_finished" from="Terrain" to="Player" method="_on_terrain_finished"]
