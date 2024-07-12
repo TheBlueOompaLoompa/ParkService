@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=4 uid="uid://be3ben3prgdtq"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_vqwgk"]
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="2_1yurj"]
+[ext_resource type="Texture2D" uid="uid://doyms45kr7chy" path="res://textures/sprites/map/Minimap tiles.png" id="3_gw3cg"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rmioy"]
+radius = 0.4
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uebip"]
+texture = ExtResource("3_gw3cg")
+0:0/0 = 0
+0:0/0/custom_data_0 = 1
+1:0/0 = 0
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 3
+
+[sub_resource type="TileSet" id="TileSet_p8h0y"]
+custom_data_layer_0/name = "biome_id"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_uebip")
+
+[node name="Player" type="RigidBody3D"]
+script = ExtResource("1_vqwgk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rmioy")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.561884, 0)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("2_1yurj")
+
+[node name="Window" type="Window" parent="HUD"]
+visible = false
+borderless = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="HUD"]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAQAAAAAAAAAAAADAAUAAAAAAAAAAAAEAAYAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_p8h0y")

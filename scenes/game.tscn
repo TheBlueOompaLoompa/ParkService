@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bm5vjsuuq5jq5"]
+[gd_scene load_steps=9 format=3 uid="uid://bm5vjsuuq5jq5"]
 
 [ext_resource type="Script" path="res://scripts/generation/terrain.gd" id="1_u4e3t"]
 [ext_resource type="Script" path="res://scripts/generation/biomegen.gd" id="2_dig2d"]
 [ext_resource type="Script" path="res://scripts/generation/biome.gd" id="3_m3ql5"]
+[ext_resource type="PackedScene" uid="uid://be3ben3prgdtq" path="res://scenes/prefabs/player.tscn" id="4_nhqqw"]
 
 [sub_resource type="Resource" id="Resource_s83lq"]
 script = ExtResource("3_m3ql5")
@@ -34,7 +35,7 @@ height_variation = 1.0
 [sub_resource type="Resource" id="Resource_30t7y"]
 script = ExtResource("3_m3ql5")
 name = "lake"
-probability = 8
+probability = 10
 neighbors = Array[String](["beach"])
 min_height = 0
 max_height = 10
@@ -48,3 +49,7 @@ script = ExtResource("1_u4e3t")
 [node name="BiomeGen" type="Node" parent="Terrain"]
 script = ExtResource("2_dig2d")
 biomes = Array[ExtResource("3_m3ql5")]([SubResource("Resource_s83lq"), SubResource("Resource_4elw2"), SubResource("Resource_x634r"), SubResource("Resource_30t7y")])
+
+[node name="Player" parent="." instance=ExtResource("4_nhqqw")]
+
+[connection signal="terrain_finished" from="Terrain" to="Player" method="_on_terrain_finished"]
