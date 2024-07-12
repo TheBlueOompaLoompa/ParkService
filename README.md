@@ -6,7 +6,7 @@ Here is the currrent todolist which I will add to as I get further through the p
 - [ ]  Procedural environment
     - [ ]  Terrain
         - [ ]  Wave Function
-            - [ ]  Biomes
+            - [x]  Biomes
             - [ ]  Height Map
             - [ ]  Bodies of Water
     - [ ]  Ground texture
