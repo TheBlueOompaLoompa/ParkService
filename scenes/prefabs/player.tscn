@@ -22,7 +22,7 @@ custom_data_layer_0/name = "biome_id"
 custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_uebip")
 
-[node name="Player" type="RigidBody3D"]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_vqwgk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -30,14 +30,15 @@ shape = SubResource("CapsuleShape3D_rmioy")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.561884, 0)
+current = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("2_1yurj")
 
 [node name="Window" type="Window" parent="HUD"]
-visible = false
+size = Vector2i(200, 200)
 borderless = true
 
-[node name="TileMapLayer" type="TileMapLayer" parent="HUD"]
+[node name="TileMapLayer" type="TileMapLayer" parent="HUD/Window"]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAQAAAAAAAAAAAADAAUAAAAAAAAAAAAEAAYAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_p8h0y")
